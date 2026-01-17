@@ -1,211 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ONxAI</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Reset & Base */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; color: #333; line-height: 1.6; background: #f9f9f9; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONxAI Humanizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Reset & Base */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; color: #fff; line-height: 1.6; background: #000; }
+  a { text-decoration: none; color: inherit; }
 
-    a { text-decoration: none; color: inherit; }
+  /* Navbar */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    background: #000;
+    z-index: 1000;
+    border-bottom: 1px solid #333;
+  }
+  nav .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: 1px; }
+  nav ul { display: flex; list-style: none; gap: 30px; }
+  nav ul li a { font-weight: 500; transition: 0.3s; }
+  nav ul li a:hover { color: #ff7e5f; }
 
-    section { padding: 80px 20px; }
+  section { padding: 100px 20px; }
 
-    h1, h2, h3 { font-weight: 700; margin-bottom: 20px; }
+  h1, h2, h3 { font-weight: 700; margin-bottom: 20px; }
 
-    /* Hero / AI Humanizer */
-    #hero {
-      background: linear-gradient(135deg,#667eea,#764ba2);
-      color: white;
-      text-align: center;
-      padding: 120px 20px;
-    }
+  /* Hero / AI Humanizer */
+  #hero {
+    text-align: center;
+    padding: 140px 20px 100px;
+  }
+  #hero h1 { font-size: 2.8rem; margin-bottom: 20px; }
+  #hero p { font-size: 1.2rem; margin-bottom: 40px; color: #ccc; }
 
-    #hero h1 { font-size: 2.8rem; margin-bottom: 20px; }
-    #hero p { font-size: 1.2rem; margin-bottom: 40px; }
+  #humanizer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  #humanizer textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #fff;
+    background: #111;
+    color: #fff;
+    outline: none;
+  }
+  #humanizer button {
+    padding: 12px 30px;
+    background: #fff;
+    border: none;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  #humanizer button:hover { background: #ccc; }
+  #output {
+    background: #111;
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 60px;
+    width: 100%;
+    word-wrap: break-word;
+    border: 1px solid #fff;
+  }
 
-    #humanizer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
+  /* Features Section */
+  #features {
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .feature-card {
+    background: #222;
+    padding: 30px;
+    border-radius: 12px;
+    flex: 1;
+    text-align: center;
+  }
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+  }
 
-    #humanizer textarea {
-      width: 100%;
-      padding: 15px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
+  /* Reviews Section */
+  #reviews {
+    background: #111;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  #reviews h2 { color: #fff; margin-bottom: 40px; }
 
-    #humanizer button {
-      padding: 12px 30px;
-      background: #ff7e5f;
-      border: none;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: 0.3s;
-    }
+  .reviews-wrapper {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+  }
 
-    #humanizer button:hover { background: #eb6750; }
+  .reviews-container {
+    display: flex;
+    gap: 20px;
+  }
 
-    #output {
-      background: rgba(255,255,255,0.1);
-      padding: 15px;
-      border-radius: 8px;
-      min-height: 60px;
-      width: 100%;
-      word-wrap: break-word;
-    }
+  .review-card {
+    background: #222;
+    padding: 30px;
+    border-radius: 12px;
+    min-width: 250px;
+    max-width: 300px;
+    flex: 0 0 auto;
+    box-shadow: 0 5px 15px rgba(255,255,255,0.05);
+    display: inline-block;
+  }
+  .review-card p { font-style: italic; margin-bottom: 15px; color: #ccc; }
+  .review-card strong { display: block; color: #fff; }
 
-    /* Features Section */
-    #features {
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+  /* Fade edges */
+  .reviews-wrapper::before,
+  .reviews-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    z-index: 2;
+  }
+  .reviews-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #111 0%, transparent 100%);
+  }
+  .reviews-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #111 0%, transparent 100%);
+  }
 
-    .feature-card {
-      background: #f0f4ff;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      flex: 1;
-      text-align: center;
-    }
+  /* Footer / Info */
+  footer {
+    background: #000;
+    color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  footer a { color: #fff; border-bottom: 1px dotted #fff; }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-    }
-
-    /* Reviews Section */
-    #reviews {
-      background: #eef2f5;
-      text-align: center;
-    }
-
-    .review-card {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      max-width: 400px;
-      margin: 20px auto;
-    }
-
-    .review-card p { font-style: italic; margin-bottom: 15px; }
-
-    /* Footer / Info */
-    footer {
-      background: #333;
-      color: #fff;
-      padding: 60px 20px;
-      text-align: center;
-    }
-
-    footer a { color: #ff7e5f; }
-
-    /* Responsive */
-    @media(max-width:768px){
-      #hero h1 { font-size: 2rem; }
-    }
-  </style>
+  /* Responsive */
+  @media(max-width:768px){
+    #hero h1 { font-size: 2rem; }
+    nav ul { gap: 15px; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- Hero / AI Humanizer -->
-  <section id="hero">
-    <h1>AI Humanizer</h1>
-    <p>Convert your text to sound more human and natural instantly.</p>
-    <div id="humanizer">
-      <textarea id="inputText" rows="4" placeholder="Type your text here..."></textarea>
-      <button onclick="humanizeText()">Humanize Text</button>
-      <div id="output">Your humanized text will appear here.</div>
+<!-- Navbar -->
+<nav>
+  <div class="logo">ONxAI</div>
+  <ul>
+    <li><a href="#hero">Home</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero / AI Humanizer -->
+<section id="hero">
+  <h1>ONxAI Humanizer</h1>
+  <p>Make your text natural and human-like in seconds.</p>
+  <div id="humanizer">
+    <textarea id="inputText" rows="4" placeholder="Type your text here..."></textarea>
+    <button onclick="humanizeText()">Humanize Text</button>
+    <div id="output">Your humanized text will appear here.</div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <h2 style="text-align:center;">Features</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>Instant Humanization</h3>
+      <p>Transform your text in real-time to sound natural and human.</p>
     </div>
-  </section>
-
-  <!-- Features -->
-  <section id="features">
-    <h2 style="text-align:center;">Features</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <h3>Instant Conversion</h3>
-        <p>Transform your text in real-time with AI-powered humanization.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Natural Tone</h3>
-        <p>Keep your writing conversational, friendly, and human-like.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Customizable Style</h3>
-        <p>Adjust tone and style to match your audience perfectly.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Easy to Use</h3>
-        <p>Simple interface designed for both beginners and professionals.</p>
-      </div>
+    <div class="feature-card">
+      <h3>Custom Tone</h3>
+      <p>Adjust tone for formal or casual conversations easily.</p>
     </div>
-  </section>
-
-  <!-- Reviews -->
-  <section id="reviews">
-    <h2>What Our Users Say</h2>
-    <div class="review-card">
-      <p>"this tool helps me finish my homework so fast!!"</p>
-      <strong>- Alex P.</strong>
+    <div class="feature-card">
+      <h3>User-Friendly</h3>
+      <p>Simple interface designed for everyone, beginner or pro.</p>
     </div>
-    <div class="review-card">
-      <p>"I used this for so long and didnt get caught. I highly recommend"!</p>
-      <strong>- Maria L.</strong>
+    <div class="feature-card">
+      <h3>Works Anywhere</h3>
+      <p>Use ONxAI on any device, any platform, anytime.</p>
     </div>
-    <div class="review-card">
-      <p>"Saved me hours of homework."</p>
-      <strong>- John K.</strong>
+  </div>
+</section>
+
+<!-- Reviews -->
+<section id="reviews">
+  <h2>What Users Are Saying</h2>
+  <div class="reviews-wrapper">
+    <div class="reviews-container" id="reviewsContainer">
+      <!-- Formal & casual reviews -->
+      <div class="review-card"><p>"ONxAI is amazing. It worked perfectly and I recommend it!"</p><strong>- Alex P.</strong></div>
+      <div class="review-card"><p>"Really easy to use, humanizes text instantly. ONx is really good."</p><strong>- Maria L.</strong></div>
+      <div class="review-card"><p>"Highly recommend ONxAI. Saved me hours of homework."</p><strong>- John K.</strong></div>
+      <div class="review-card"><p>"It worked better than I expected. Casual and formal text both perfect."</p><strong>- Sarah W.</strong></div>
+      <div class="review-card"><p>"ONxAI is excellent! Makes everything sound natural."</p><strong>- David R.</strong></div>
+      <div class="review-card"><p>"I recommend this to everyone. ONx is really good and reliable."</p><strong>- Emma F.</strong></div>
+      <div class="review-card"><p>"Worked perfectly, casual and professional tone handled easily."</p><strong>- Chris M.</strong></div>
+      <div class="review-card"><p>"ONxAI is the best tool for making text sound human. Highly recommend."</p><strong>- Laura S.</strong></div>
+      <!-- Repeat for seamless scrolling -->
+      <div class="review-card"><p>"ONxAI is amazing. It worked perfectly and I recommend it!"</p><strong>- Alex P.</strong></div>
+      <div class="review-card"><p>"Really easy to use, ONx is really good."</p><strong>- Maria L.</strong></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Footer / Info -->
-  <footer>
-    <p>© 2026 ONxAI. All rights reserved.</p>
-    <p>Learn more at <a href="#">https://discord.gg/FaJYfWAp8H</a></p>
-  </footer>
+<!-- Footer / Info -->
+<footer id="footer">
+  <p>© 2026 ONxAI. All rights reserved.</p>
+  <p>Learn more at <a href="#">www.onxai.com</a></p>
+</footer>
 
-  <script>
-    // Simple AI Humanizer Simulation
-    function humanizeText() {
-      const input = document.getElementById('inputText').value;
-      const output = document.getElementById('output');
-
-      if (!input.trim()) {
-        output.innerText = "Please enter some text.";
-        return;
-      }
-
-      // Fake humanizer - adds some natural words
-      const humanized = input
-        .replace(/\b(I|i)\b/g, "I")
-        .replace(/\./g, ". ")
-        .replace(/and/g, "and,")
-        .replace(/but/g, "but,");
-
-      output.innerText = humanized;
+<script>
+  // Simple AI Humanizer Simulation
+  function humanizeText() {
+    const input = document.getElementById('inputText').value;
+    const output = document.getElementById('output');
+    if (!input.trim()) {
+      output.innerText = "Please enter some text.";
+      return;
     }
-  </script>
+    const humanized = input
+      .replace(/\b(I|i)\b/g, "I")
+      .replace(/\./g, ". ")
+      .replace(/and/g, "and,")
+      .replace(/but/g, "but,")
+      .replace(/\s+/g, " ");
+    output.innerText = humanized;
+  }
+
+  // Smooth continuous scrolling
+  const container = document.getElementById('reviewsContainer');
+  let scrollSpeed = 0.5; // pixels per frame
+  let isHovered = false;
+
+  container.parentElement.addEventListener('mouseenter', () => isHovered = true);
+  container.parentElement.addEventListener('mouseleave', () => isHovered = false);
+
+  function scrollReviews() {
+    if (!isHovered) {
+      container.scrollLeft += scrollSpeed;
+      // reset for infinite loop
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      }
+    }
+    requestAnimationFrame(scrollReviews);
+  }
+
+  scrollReviews();
+</script>
 
 </body>
 </html>
-
